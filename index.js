@@ -1,8 +1,40 @@
+//reading and writing files synchronously
+//Reading method
 const fs = require('fs')
+const http = require('http')
+////////////////////////////////////////
+///////For Files
+const readEncryptedMessage = fs.readFileSync('./txt/input.txt', 'utf-8')
+console.log(readEncryptedMessage)
 
-const readMessage = fs.readFileSync('./txt/input.txt', 'utf-8')
-console.log(readMessage)
+//writing method
+const ForwardMessage = `This is the result for your request ${readEncryptedMessage}\nCreated on ${new Date ()}`
+fs.writeFileSync('./txt/output1.txt', ForwardMessage)
+console.log("Done")
 
-const replymessage = `This is the information we could find about avocade: ${readMessage}\nCreated on ${new Date()}`
-fs.writeFileSync('./txt/ouput.txt', replymessage)
-console.log("Job Done")
+//reading and writing files asynchronously
+fs.readFile('./txt/startt.txt', 'utf-8', (err, data1) => {
+    if (err) return console.log('ERROR!')
+    fs.readFile(`./txt/${data1}.txt`, 'utf-8', (err, data2) => {
+        console.log(data2)
+        fs.readFile(`./txt/append.txt`, 'utf-8', (err, data3) => {
+            console.log(data3)
+
+            fs.writeFile('./txt/final.txt', `${data2}\n${data3}`, 'utf-8', err => {
+                console.log("it has been uploaded")
+            })
+        })
+    })
+})
+console.log("I will get here before you")
+///////////////////////////////////////////////////////////
+///For server
+
+const server = http.createServer(function(req, res){
+    res.end('Hello from the serverside here o')
+})
+
+server.listen(8000, '127.0.0.1', function(){
+    console.log('listening to requests on port 8000')
+})
+
