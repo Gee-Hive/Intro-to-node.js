@@ -38,12 +38,13 @@ const server = http.createServer(function(req, res){
     }else if(pathName === '/product'){
         res.end('this is the PRODUCT PAGE')
     }else{
-        res.writeHead(404)
-        res.end('Page not found!')
+        res.writeHead(404, {
+            'Content-type':'text/html'
+        })
+        res.end(<h1>'Page not found!'</h1>)
     }
 })
 
 server.listen(8000, '127.0.0.1', function(){
     console.log('listening to requests on port 8000')
 })
-
