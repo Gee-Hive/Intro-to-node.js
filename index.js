@@ -30,21 +30,57 @@ const url = require('url')
 // console.log("I will get here before you")
 ///////////////////////////////////////////////////////////
 ///For server
+const data = fs.readFileSync  (`${__dirname}/dev-data/data.json`, 'utf-8')
+const productName = JSON.parse(data)
 
 const server = http.createServer(function(req, res){
-    const pathName = req.url;
-    if (pathName ==='/' || pathName === '/overview'){
-        res.end('this is the OVERVIEW PAGE')
-    }else if(pathName === '/product'){
-        res.end('this is the PRODUCT PAGE')
+    const pathName = req.url
+    if(pathName === '/' || pathName === '/overview'){
+        res.end("This is my homePage guys")
+    }else if (pathName === '/about'){
+        res.end('this is all about me fellas')
+    }else if(pathName === '/api'){
+        res.writeHead(200, {
+            'Content-type':'application/json'
+        })
+        res.end(data)
+
+      
     }else{
         res.writeHead(404, {
             'Content-type':'text/html'
         })
-        res.end(<h1>'Page not found!'</h1>)
+        res.end("page not found")
     }
 })
 
-server.listen(8000, '127.0.0.1', function(){
-    console.log('listening to requests on port 8000')
+server.listen(3000, '127.0.0.1', function(){
+    console.log('Listening to port 3000')
 })
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
+
